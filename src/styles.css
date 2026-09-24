@@ -1,0 +1,174 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Game Book — dark mystical dashboard design system */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-arcane: var(--arcane);
+  --color-ember: var(--ember);
+  --color-frost: var(--frost);
+
+  --font-display: "Cinzel", "Playfair Display", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.75rem;
+
+  --background: oklch(0.16 0.03 285);
+  --foreground: oklch(0.95 0.01 280);
+
+  --surface: oklch(0.2 0.04 285);
+  --surface-2: oklch(0.24 0.05 285);
+
+  --card: oklch(0.2 0.04 285 / 0.6);
+  --card-foreground: oklch(0.95 0.01 280);
+  --popover: oklch(0.18 0.04 285);
+  --popover-foreground: oklch(0.95 0.01 280);
+
+  --primary: oklch(0.68 0.19 295);
+  --primary-foreground: oklch(0.99 0 0);
+
+  --secondary: oklch(0.28 0.05 285);
+  --secondary-foreground: oklch(0.95 0.01 280);
+
+  --muted: oklch(0.24 0.03 285);
+  --muted-foreground: oklch(0.68 0.03 280);
+
+  --accent: oklch(0.75 0.16 220);
+  --accent-foreground: oklch(0.14 0.03 285);
+
+  --arcane: oklch(0.68 0.19 295);
+  --ember: oklch(0.75 0.18 25);
+  --frost: oklch(0.78 0.14 210);
+
+  --destructive: oklch(0.65 0.24 25);
+  --destructive-foreground: oklch(0.99 0 0);
+
+  --border: oklch(0.32 0.04 285 / 0.6);
+  --input: oklch(0.24 0.04 285);
+  --ring: oklch(0.68 0.19 295);
+
+  /* Gradientes/sombras derivados das cores base via color-mix — qualquer tema novo
+     (inclusive os criados no editor de temas do admin) herda isso automaticamente,
+     sem precisar redefinir gradiente próprio. */
+  --gradient-arcane: linear-gradient(135deg, var(--primary), color-mix(in oklch, var(--primary), black 22%));
+  --gradient-hero: linear-gradient(135deg, var(--surface) 0%, var(--background) 55%, color-mix(in oklch, var(--background), black 12%) 100%);
+  --gradient-glow: radial-gradient(circle at 30% 20%, color-mix(in oklch, var(--primary), transparent 65%), transparent 60%);
+
+  --shadow-arcane: 0 20px 60px -20px color-mix(in oklch, var(--primary), transparent 45%);
+  --shadow-card: 0 8px 32px -8px color-mix(in oklch, var(--background), black 40%);
+}
+
+/* Force dark-first: no toggle de claro/escuro — a troca é só de paleta (tema),
+   feita via variáveis CSS inline pelo ThemeToggle (ver src/lib/theme.ts). */
+html {
+  color-scheme: dark;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, color-mix(in oklch, var(--primary), transparent 82%), transparent),
+      radial-gradient(ellipse 60% 40% at 90% 10%, color-mix(in oklch, var(--accent), transparent 88%), transparent);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: 0.01em;
+  }
+}
+
+@utility glass {
+  background: color-mix(in oklab, var(--surface) 70%, transparent);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+}
+
+@utility glass-strong {
+  background: color-mix(in oklab, var(--surface-2) 85%, transparent);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+}
+
+@utility rune-border {
+  position: relative;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--surface), var(--surface)) padding-box,
+    var(--gradient-arcane) border-box;
+}
+
+@utility text-arcane {
+  background: var(--gradient-arcane);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--primary) 40%, transparent);
+  border-radius: 999px;
+}
+
+/* MD editor dark theming overrides */
+.w-md-editor {
+  background: var(--surface) !important;
+  color: var(--foreground) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+}
+.w-md-editor-toolbar {
+  background: var(--surface-2) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+.w-md-editor-text, .w-md-editor-text-input, .w-md-editor-text-pre > code, .w-md-editor-text textarea {
+  color: var(--foreground) !important;
+  -webkit-text-fill-color: var(--foreground) !important;
+}
+.wmde-markdown {
+  background: transparent !important;
+  color: var(--foreground) !important;
+}
